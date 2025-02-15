@@ -72,6 +72,12 @@
         }
     }
 
+    .main_img_container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
     .slider_main_img {
         margin-top: 16px;
         width: 100%;
@@ -123,7 +129,7 @@
         }
 
         .slider_main_img {
-            height: 360px;
+            height: 440px;
         }
 
         .images_inner {
@@ -132,6 +138,12 @@
                 height: 80px;
                 opacity: 0.5;
             }
+        }
+    }
+
+    @include variables.media-md {
+        .slider_arrow {
+            display: none;
         }
     }
 }

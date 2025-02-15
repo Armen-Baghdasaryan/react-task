@@ -14,6 +14,8 @@ const SliderModal = ({ images, open, close }: PageProps) => {
     const [src, setSrc] = useState<string | null>(null);
     const [imgIndex, setImgIndex] = useState<number>(0);
     const [isFading, setIsFading] = useState<boolean>(false);
+    const [startTouch, setStartTouch] = useState<number>(0);
+    const [isSwiping, setIsSwiping] = useState<boolean>(false);
 
     useEffect(() => {
         setSrc(images[0] || null);
@@ -37,6 +39,31 @@ const SliderModal = ({ images, open, close }: PageProps) => {
         action === 'next' ? setImgIndex((prev: number) => prev + 1) : setImgIndex((prev: number) => prev - 1)
     }
 
+    const handleTouchStart = (e: React.TouchEvent) => {
+        const touchStart = e.touches[0].clientX;
+        setStartTouch(touchStart);
+        setIsSwiping(false);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        const touchMove = e.touches[0].clientX;
+        if (startTouch) {
+            const swipeDistance = touchMove - startTouch;
+            if (Math.abs(swipeDistance) > 50 && !isSwiping) {
+                setIsSwiping(true);
+                if (swipeDistance > 0 && imgIndex > 0) {
+                    setImgIndex((prev) => prev - 1);
+                } else if (swipeDistance < 0 && imgIndex < images.length - 1) {
+                    setImgIndex((prev) => prev + 1);
+                }
+            }
+        }
+    };
+
+    const handleTouchEnd = () => {
+        setIsSwiping(false);
+    };
+
     return (
         <div className={`modal_wrapper ${open ? "modal_open" : ""}`}>
             <div className="modal_content">
@@ -46,7 +73,7 @@ const SliderModal = ({ images, open, close }: PageProps) => {
                     <div className="slider_main">
                         <img width={32} height={32} src={arrowLeft} alt="arrow" className={`slider_arrow ${imgIndex === 0 ? 'slider_arrow-disabled' : ''}`} onClick={() => handleSlide('prev')} />
                         {src && (
-                            <div>
+                            <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} className="main_img_container">
                                 <img className={`slider_main_img ${isFading ? "fade-out" : "fade-in"}`} src={src} alt="main-img" />
                             </div>
                         )}
