@@ -1,0 +1,31 @@
+.car_item {
+    width: 100%;
+    max-width: 280px;
+
+    img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        cursor: pointer;
+    }
+
+    .car_price {
+        margin-bottom: 4px;
+    }
+
+    .car_urgently {
+        width: max-content;
+        margin: 8px 0;
+        padding: 6px 8px;
+        border-radius: 8px;
+        background-color: #ff4174;
+        color: #ffffff;
+    }
+
+    .car_description {
+        margin: 8px 0;
+        color: rgb(136, 137, 154);
+    }
+}
