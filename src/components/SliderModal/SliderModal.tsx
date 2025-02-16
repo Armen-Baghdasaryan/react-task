@@ -61,7 +61,10 @@ const SliderModal = ({ images, open, close }: PageProps) => {
     return (
         <div className={`modal_wrapper ${open ? "modal_open" : ""}`}>
             <div className="modal_content">
-                <img className="modal_close" width={32} height={32} alt="icon" src={closeIcon} onClick={close} />
+                <img className="modal_close" width={32} height={32} alt="icon" src={closeIcon} onClick={() => {
+                    close()
+                    setImgIndex(0)
+                }} />
                 <div className="modal_slider">
                     <p className="slider_count">{imgIndex + 1}/{images.length}</p>
                     <div className="slider_main">
